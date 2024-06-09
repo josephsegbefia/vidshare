@@ -7,6 +7,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
@@ -114,7 +115,7 @@ const Create = () => {
             {form.thumbnail ? (
               <Image
                 source={{ uri: form.thumbnail.uri }}
-                resizeMode='cover'
+                resizeMode='contain'
                 clasName='w-full h-64 rounded-2xl'
               />
             ) : (
