@@ -11,10 +11,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import { icons } from '../../constants';
-import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
 import { Video, ResizeMode } from 'expo-av';
+import { createVideo } from '../../lib/appwrite';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Create = () => {
+  const { user } = useGlobalContext();
   const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     title: '',
@@ -24,11 +27,13 @@ const Create = () => {
   });
 
   const openPicker = async (selectType) => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type:
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes:
         selectType === 'image'
-          ? ['image/png', 'image/jpg']
-          : ['video/mp4', 'video/gif'],
+          ? ImagePicker.MediaTypeOptions.Images
+          : ImagePicker.MediaTypeOptions.Videos,
+      aspect: [4, 3],
+      quality: 1,
     });
 
     if (!result.canceled) {
@@ -39,14 +44,31 @@ const Create = () => {
       if (selectType === 'video') {
         setForm({ ...form, video: result.assets[0] });
       }
-    } else {
-      setTimeout(() => {
-        Alert.alert('Document picked', JSON.stringify(result, null, 2));
-      }, 100);
     }
   };
 
-  const submit = () => {};
+  const submit = async () => {
+    if (!form.prompt || !form.title || !form.thumbnail || !form.video) {
+      return Alert.alert('Please fill in all the fields');
+    }
+    setUploading(true);
+
+    try {
+      await createVideo({ ...form, userId: user.$id });
+      Alert.alert('Success', 'Post uploaded successfully');
+      router.push('/home');
+    } catch (error) {
+      Alert.alert('Error', error.message);
+    } finally {
+      setForm({
+        title: '',
+        video: null,
+        thumbnail: null,
+        prompt: '',
+      });
+      setUploading(false);
+    }
+  };
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView className='px-4 my-6'>
@@ -67,9 +89,9 @@ const Create = () => {
               <Video
                 source={{ uri: form.video.uri }}
                 className='w-full h-64 rounded-2xl'
-                useNativeControls
+                // useNativeControls
                 resizeMode={ResizeMode.CONTAIN}
-                isLooping
+                // isLooping
               />
             ) : (
               <View className='w-full h-40 px-4 bg-black-100 rounded-2xl justify-center items-center'>
@@ -114,7 +136,7 @@ const Create = () => {
           value={form.prompt}
           placeholder='The prompt you used to create this video'
           handleChangeText={(e) => setForm({ ...form, prompt: e })}
-          otherStyles='mt-10'
+          otherStyles='mt-7'
         />
         <CustomButton
           title='Submit & Publish'
