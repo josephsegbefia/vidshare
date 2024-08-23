@@ -45,7 +45,7 @@ const SignUp = () => {
             className='w-[115px] h-[35px]'
           />
           <Text className='text-2xl text-white text-semibold mt-10 font-semibold'>
-            Sign up to Aora
+            Sign up to VidShare
           </Text>
           <FormField
             title='Username'
