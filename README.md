@@ -40,48 +40,57 @@ Follow these steps to clone the repository and set up the app:
    ```bash
    git clone [https://github.com/yourusername/vidshare.git](https://github.com/josephsegbefia/vidshare.git)
    cd vidshare
-   
+
+   ```
+
 2. **Install Dependencies**
-Make sure you have Expo CLI installed globally:
-    ```bash
-    npm install -g expo-cli
+   Make sure you have Expo CLI installed globally:
+   ```bash
+   npm install -g expo-cli
 
 3. Then, install the project dependencies:
+
    ```bash
    npm install
-   
+
+   ```
+
 4. **Running the App**
-You can run the app on either an iOS or Android device or emulator.
+   You can run the app on either an iOS or Android device or emulator.
 
-*Running on iOS*
-  - Open the iOS Simulator:
+_Running on iOS_
 
-  - Open Xcode.
+- Open the iOS Simulator:
 
-  - Go to Xcode > Preferences > Locations and set the Command Line Tools to the Xcode version you're using.
+- Open Xcode.
+
+- Go to Xcode > Preferences > Locations and set the Command Line Tools to the Xcode version you're using.
 
 In the Terminal, run the following command to start the iOS Simulator:
-  ```bash
-  expo start --ios
+
+```bash
+expo start --ios
+```
 
 Run the App:
 
-  -  The Expo CLI will open a new tab in your browser. Click on "Run on iOS Simulator."
-  -  The app will automatically launch in the iOS Simulator.
-
+- The Expo CLI will open a new tab in your browser. Click on "Run on iOS Simulator."
+- The app will automatically launch in the iOS Simulator.
 
 Running on Android
- - Open the Android Emulator:
 
-    -  Open Android Studio.
-    -  Launch the AVD Manager and start an emulator.
-    -  Alternatively, you can connect a physical Android device with USB debugging enabled.
-  Run the App:
+- Open the Android Emulator:
+
+  - Open Android Studio.
+  - Launch the AVD Manager and start an emulator.
+  - Alternatively, you can connect a physical Android device with USB debugging enabled.
+    Run the App:
 
 In the Terminal, run the following command to start the app on Android:
-  ```bash 
-  expo start --android
 
+```bash
+expo start --android
+```
 
 5. **Troubleshooting**
 
@@ -90,4 +99,3 @@ If you encounter any issues:
 Ensure all dependencies are correctly installed.
 Check that your device/emulator is properly set up and running.
 Verify your Appwrite backend configuration.
-
